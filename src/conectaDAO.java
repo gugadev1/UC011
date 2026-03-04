@@ -21,7 +21,11 @@ public class conectaDAO {
         Connection conn = null;
         
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/uc11?user=root&password=&connectTimeout=5000&socketTimeout=5000&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+            String dbUser = System.getenv().getOrDefault("DB_USER", "leiloes");
+            String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "123456");
+            String url = "jdbc:mysql://localhost:3306/uc11?connectTimeout=5000&socketTimeout=5000&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
+            conn = DriverManager.getConnection(url, dbUser, dbPassword);
             
         } catch (SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
