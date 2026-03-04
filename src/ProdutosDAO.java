@@ -31,6 +31,21 @@ public class ProdutosDAO {
         String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
         ultimoErro = null;
 
+        if (produto == null) {
+            ultimoErro = "Produto inválido para cadastro.";
+            return false;
+        }
+
+        if (produto.getNome() == null || produto.getNome().trim().isEmpty()) {
+            ultimoErro = "Nome do produto é obrigatório.";
+            return false;
+        }
+
+        if (produto.getValor() == null || produto.getValor() <= 0) {
+            ultimoErro = "Valor do produto deve ser maior que zero.";
+            return false;
+        }
+
         try {
             conn = new conectaDAO().connectDB();
             if (conn == null) {

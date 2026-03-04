@@ -58,8 +58,14 @@ public class cadastroVIEW extends javax.swing.JFrame {
             }
         });
 
+        cadastroValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastroValorActionPerformed(evt);
+            }
+        });
+
         btnCadastrar.setBackground(new java.awt.Color(153, 255, 255));
-        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setText("Salvar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -142,7 +148,15 @@ public class cadastroVIEW extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
+    private void cadastroValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroValorActionPerformed
+        salvarProduto();
+    }//GEN-LAST:event_cadastroValorActionPerformed
+
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        salvarProduto();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void salvarProduto() {
         ProdutosDTO produto = new ProdutosDTO();
         String nome = cadastroNome.getText().trim();
         String valor = cadastroValor.getText().trim();
@@ -166,7 +180,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         produto.setStatus(status);
 
         btnCadastrar.setEnabled(false);
-        btnCadastrar.setText("Cadastrando...");
+        btnCadastrar.setText("Salvando...");
 
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
             private final ProdutosDAO produtodao = new ProdutosDAO();
@@ -182,7 +196,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
             @Override
             protected void done() {
                 btnCadastrar.setEnabled(true);
-                btnCadastrar.setText("Cadastrar");
+                btnCadastrar.setText("Salvar");
 
                 try {
                     boolean sucesso = get();
@@ -204,8 +218,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         };
 
         worker.execute();
-        
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+    }
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
         listagemVIEW listagem = new listagemVIEW(); 
