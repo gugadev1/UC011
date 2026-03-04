@@ -23,7 +23,8 @@ public class conectaDAO {
         try {
             String dbUser = System.getenv().getOrDefault("DB_USER", "leiloes");
             String dbPassword = System.getenv().getOrDefault("DB_PASSWORD", "123456");
-            String url = "jdbc:mysql://localhost:3306/uc11?connectTimeout=5000&socketTimeout=5000&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            String dbName = System.getenv().getOrDefault("DB_NAME", "locale");
+            String url = "jdbc:mysql://localhost:3306/" + dbName + "?connectTimeout=5000&socketTimeout=5000&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
             conn = DriverManager.getConnection(url, dbUser, dbPassword);
             
