@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -136,10 +137,6 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
         //produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
@@ -209,6 +206,12 @@ public class listagemVIEW extends javax.swing.JFrame {
             model.setNumRows(0);
             
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+
+            String erroListagem = produtosdao.getUltimoErro();
+            if (erroListagem != null && !erroListagem.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Erro ao listar produtos.\nDetalhe: " + erroListagem);
+                return;
+            }
             
             for(int i = 0; i < listagem.size(); i++){
                 model.addRow(new Object[]{
