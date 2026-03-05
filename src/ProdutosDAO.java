@@ -120,6 +120,90 @@ public class ProdutosDAO {
 
         return listagem;
     }
+
+    public boolean venderProduto(int idProduto) {
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+        ultimoErro = null;
+
+        if (idProduto <= 0) {
+            ultimoErro = "ID do produto inválido.";
+            return false;
+        }
+
+        try {
+            conn = new conectaDAO().connectDB();
+            if (conn == null) {
+                ultimoErro = "Não foi possível conectar ao banco de dados.";
+                return false;
+            }
+
+            prep = conn.prepareStatement(sql);
+            prep.setInt(1, idProduto);
+
+            return prep.executeUpdate() > 0;
+        } catch (SQLException erro) {
+            ultimoErro = erro.getMessage();
+            return false;
+        } catch (Exception erro) {
+            ultimoErro = erro.getMessage();
+            return false;
+        } finally {
+            try {
+                if (prep != null) {
+                    prep.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException erro) {
+            }
+        }
+    }
+
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        String sql = "SELECT id, nome, valor, status FROM produtos WHERE status = 'Vendido'";
+        listagem = new ArrayList<>();
+        ultimoErro = null;
+
+        try {
+            conn = new conectaDAO().connectDB();
+            if (conn == null) {
+                ultimoErro = "Não foi possível conectar ao banco de dados.";
+                return listagem;
+            }
+
+            prep = conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+
+            while (resultset.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+                listagem.add(produto);
+            }
+        } catch (SQLException erro) {
+            ultimoErro = erro.getMessage();
+        } catch (Exception erro) {
+            ultimoErro = erro.getMessage();
+        } finally {
+            try {
+                if (resultset != null) {
+                    resultset.close();
+                }
+                if (prep != null) {
+                    prep.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException erro) {
+            }
+        }
+
+        return listagem;
+    }
     
     
     
