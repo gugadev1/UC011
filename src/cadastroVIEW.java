@@ -65,7 +65,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         });
 
         btnCadastrar.setBackground(new java.awt.Color(153, 255, 255));
-        btnCadastrar.setText("Salvar");
+        btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -180,7 +180,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         produto.setStatus(status);
 
         btnCadastrar.setEnabled(false);
-        btnCadastrar.setText("Salvando...");
+        btnCadastrar.setText("Cadastrando...");
 
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
             private final ProdutosDAO produtodao = new ProdutosDAO();
@@ -196,7 +196,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
             @Override
             protected void done() {
                 btnCadastrar.setEnabled(true);
-                btnCadastrar.setText("Salvar");
+                btnCadastrar.setText("Cadastrar");
 
                 try {
                     boolean sucesso = get();
